@@ -1,43 +1,53 @@
-Momo Fraud Detection Dataset – AI & Data Science Pipeline
-Project Overview
+# **Momo Fraud Detection – AI & Data Science Pipeline**
+## **Project Overview**
 
-This project implements an end-to-end data science and AI pipeline in Python to detect fraudulent mobile money transactions using the Momo Fraud Detection dataset. The system simulates a real-world workflow by integrating:
+This project implements an end-to-end Data Science and Artificial Intelligence pipeline in Python to detect fraudulent mobile money (MoMo) transactions using the Momo Fraud Detection dataset.
+It simulates a real-world fraud detection workflow by integrating:
 
-Data acquisition & preprocessing
+Data acquisition and preprocessing
 
-Custom risk scoring using rules
+Custom rule-based fraud risk scoring
 
-Handling class imbalance with SMOTE
+Handling class imbalance using SMOTE
 
 Machine Learning model training and evaluation (Random Forest)
 
 Visualization of results and feature importance
 
-The goal is to detect rare fraudulent transactions (~0.1–0.2% of all transactions) accurately, which is a key challenge in financial fraud detection.
+The primary objective is to accurately identify rare fraudulent transactions (~0.1–0.2%), which represents a major challenge in financial fraud detection systems.
 
-Problem Statement
+---
 
-Mobile money fraud is a major issue, especially with increasing digital transactions. Detecting fraudulent transactions in real time is critical for financial institutions and mobile operators.
+## Problem Statement
 
-Key challenges:
+Mobile money fraud is a growing problem due to the rapid increase in digital financial transactions. Fraudulent activities can lead to significant financial losses, reduced customer trust, and regulatory challenges for mobile operators and financial institutions.
 
-Extremely imbalanced dataset
+Key challenges addressed in this project include:
 
-High variability in transaction types and amounts
+Extremely imbalanced data, where fraud cases are very rare
 
-Need for combining rule-based risk features with machine learning
+High variability in transaction types and transaction amounts
 
-This project demonstrates how to build a reliable AI-based fraud detection pipeline using Python.
+The need to combine rule-based domain knowledge with machine learning models
 
-Dataset
+This project demonstrates how an AI-driven fraud detection system can be designed using Python to address these challenges effectively.
 
-Name: momo-fraud-detection-dataset.csv
-Source: Kaggle – PaySim Synthetic Mobile Money Dataset
+---
 
-Columns include:
+## Dataset
 
-Column	Description
-step	Time step of transaction
+**Name: momo-fraud-detection-dataset.csv**
+
+**Source: Kaggle – PaySim Synthetic Mobile Money Dataset**
+
+[PaySim Mobile Money Fraud Dataset](https://www.kaggle.com/datasets/ealaxi/paysim1/data)
+
+
+---
+
+## Dataset Features
+Column Name	Description
+step	Time step of the transaction
 type	Transaction type (PAYMENT, TRANSFER, CASH_OUT, etc.)
 amount	Transaction amount
 nameOrig	Sender account ID
@@ -46,119 +56,133 @@ newbalanceOrig	Sender balance after transaction
 nameDest	Recipient account ID
 oldbalanceDest	Recipient balance before transaction
 newbalanceDest	Recipient balance after transaction
-isFraud	Target variable (1 = fraud, 0 = not fraud)
-isFlaggedFraud	Flagged fraud (manual)
+isFraud	Target variable (1 = Fraud, 0 = Not Fraud)
+isFlaggedFraud	Manually flagged fraud
 
-Observation:
-Fraud transactions are extremely rare (~0.1%), making this a highly imbalanced classification problem.
+---
 
-Project Structure
+## Observation:
+Fraudulent transactions represent ~0.1% of the dataset, making this a highly imbalanced classification problem.
+
+---
+
+## Project Structure
 momo-fraud-detection/
 │
-├─ data/
-│   └─ momo-fraud-detection-dataset.csv
+├── data/
+│   └── momo-fraud-detection-dataset.csv   # Dataset (not tracked in GitHub)
 │
-├─ src/
-│   ├─ risk_algorithm.py         # Custom FraudRiskScorer class
-│   ├─ model.py                  # (Optional) ML model class if used
-│   ├─ preprocessing.py          # (Optional) preprocessing functions
-│   ├─ data_loader.py            # (Optional) dataset loading functions
-│   └─ visualization.py          # (Optional) plotting functions
+├── src/
+│   ├── risk_algorithm.py      # Custom FraudRiskScorer
+│   ├── model.py               # ML model logic
+│   ├── preprocessing.py       # Data preprocessing functions
+│   ├── data_loader.py         # Dataset loading utilities
+│   └── visualization.py       # Plotting and visualization utilities
 │
-├─ notebook.ipynb                # Main notebook (EDA, SMOTE, ML, evaluation)
-├─ README.md                     # Project overview and instructions
-└─ requirements.txt              # Python dependencies
+├── notebooks/
+│   └── notebook.ipynb         # EDA, SMOTE, ML training & evaluation
+│
+├── tests/
+│   └── test_algorithms.py     # Unit tests
+│
+├── README.md                  # Project documentation
+└── requirements.txt           # Python dependencies
 
-Installation & Setup
+---
 
-Clone the repository:
-
-git clone <your-repo-url>
+## Installation & Setup
+1. Clone the Repository
+git clone https://github.com/Favourez/momo-fraud-detection.git
 cd momo-fraud-detection
 
-
-Install dependencies:
-
+2. Install Dependencies
 pip install -r requirements.txt
 
+3. Download Dataset
 
-Requirements example (requirements.txt):
+Download the dataset from Kaggle and place it in:
 
-pandas
-numpy
-scikit-learn
-imbalanced-learn
-matplotlib
+data/momo-fraud-detection-dataset.csv
 
+4. Run the Notebook
+jupyter notebook notebooks/notebook.ipynb
 
-Launch the notebook:
+---
 
-jupyter notebook notebook.ipynb
+## Workflow
 
-Workflow
+- Load the dataset
 
-Load dataset
+- Perform Exploratory Data Analysis (EDA)
 
-Exploratory Data Analysis (EDA) – check data types, distributions, and imbalanced classes
+- Analyze class imbalance
 
-Apply custom risk algorithm (FraudRiskScorer) to create risk_score feature
+- Apply custom FraudRiskScorer to generate a risk_score feature
 
-Encode categorical features (transaction type)
+- Encode categorical features
 
-Split dataset into train/test
+- Split data into training and testing sets
 
-Balance training data with SMOTE
+- Balance the training data using SMOTE
 
-Train Random Forest classifier on resampled data
+- Train a Random Forest classifier
 
-Evaluate model using precision, recall, F1-score, and confusion matrix
+- Evaluate model performance
 
-Visualize feature importance
+- Visualize confusion matrix and feature importance
 
-Results & Observations
+---
 
-Class imbalance before SMOTE:
+## Results & Observations
+### Class Distribution (Before SMOTE)
 
-0: 5,083,526
-1: 6,570
+Non-Fraud (0): 5,083,526
 
+Fraud (1): 6,570
 
-After SMOTE (training data):
+### After SMOTE (Training Data)
 
-0: 5,083,526
-1: 5,083,526
+Non-Fraud (0): 5,083,526
 
+Fraud (1): 5,083,526
 
-Random Forest evaluation (example):
+Model Performance (Random Forest)
 
-Precision: high for fraud class after SMOTE
+High recall for fraud detection, ensuring most fraudulent transactions are identified
 
-Recall: improved for detecting frauds
+Good precision, reducing unnecessary false alarms
 
-Feature importance: risk_score, amount, and type contribute most
+Feature importance analysis shows that:
 
-SMOTE ensures the model can learn patterns from rare fraud transactions, and the risk score feature helps boost performance.
+risk_score
 
-Conclusion
+amount
 
-Mobile money fraud detection is challenging due to highly imbalanced data.
+transaction type
+are the most influential features
 
-Combining rule-based features with machine learning models improves detection.
+The integration of SMOTE and a rule-based risk score significantly improves the model’s ability to learn fraud patterns.
 
-SMOTE is critical to balance the dataset for training.
+---
 
-Random Forest provides a good baseline for fraud detection.
+## Conclusion
+
+Detecting mobile money fraud is challenging due to extreme class imbalance and complex transaction behaviors. This project demonstrates that combining domain-driven risk scoring with machine learning leads to improved fraud detection performance. The Random Forest model provides a strong baseline, while SMOTE ensures meaningful learning from rare fraud cases.
 
 Next Steps / Improvements
 
-Experiment with XGBoost or LightGBM for faster training and higher accuracy
+Experiment with XGBoost or LightGBM for faster training and improved accuracy
 
-Tune Random Forest hyperparameters (n_estimators, max_depth)
+Perform hyperparameter tuning on the Random Forest model
 
-Explore real-time fraud scoring for live transaction streams
+Explore real-time fraud detection for streaming transactions
 
-Credits
+Evaluate cost-sensitive learning approaches
+
+---
+
+## Credits
 
 Dataset: Kaggle – PaySim1
 
-Python libraries: Pandas, NumPy, scikit-learn, imbalanced-learn, Matplotlib
+Libraries: Pandas, NumPy, Scikit-learn, Imbalanced-learn, Matplotlib
